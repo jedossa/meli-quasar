@@ -10,21 +10,23 @@ import meli.quasar.routes.LiveHttpApi
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.middleware.AutoSlash
-
+import io.circe.config.parser
 import scala.concurrent.ExecutionContext
 
 object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
-    InMemoryApp.make[IO].use { service =>
-      val api = LiveHttpApi[IO](service, AppErrorHandler[IO])
-      val httpApp = AutoSlash(api.routes)
+    Resource.liftF(parser.decodePathF[IO, Int]("http.port")).use { port =>
+      InMemoryApp.make[IO].use { service =>
+        val api = LiveHttpApi[IO](service, AppErrorHandler[IO])
+        val httpApp = AutoSlash(api.routes)
 
-      BlazeServerBuilder[IO](ExecutionContext.global)
-        .bindHttp(8080, "localhost")
-        .withHttpApp(httpApp.orNotFound)
-        .serve
-        .compile
-        .drain
+        BlazeServerBuilder[IO](ExecutionContext.global)
+          .bindHttp(port, "localhost")
+          .withHttpApp(httpApp.orNotFound)
+          .serve
+          .compile
+          .drain
+      }
     } as ExitCode.Success
 }
 
