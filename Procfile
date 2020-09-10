@@ -1,0 +1,1 @@
+web: http/target/universal/stage/bin/quasar-http
