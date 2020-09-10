@@ -23,8 +23,6 @@ object Main extends IOApp {
         val api = LiveHttpApi[IO](service, AppErrorHandler[IO])
         val httpApp = AutoSlash(api.routes)
 
-        println(s"PORT = ${config.port.toString}")
-
         BlazeServerBuilder[IO](ExecutionContext.global)
           .bindHttp(config.port)
           .withHttpApp(httpApp.orNotFound)
