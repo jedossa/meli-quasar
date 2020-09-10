@@ -1,1 +1,1 @@
-web: http/target/universal/stage/bin/quasar-http -Dhttp.port=${PORT}
+web: http/target/universal/stage/bin/quasar-http
