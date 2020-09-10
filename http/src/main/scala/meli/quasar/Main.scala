@@ -1,5 +1,7 @@
 package meli.quasar
 
+import java.util.logging.Logger
+
 import cats.effect._
 import cats.effect.concurrent.Ref
 import io.circe.config.parser
@@ -22,6 +24,8 @@ object Main extends IOApp {
       InMemoryApp.make[IO].use { service =>
         val api = LiveHttpApi[IO](service, AppErrorHandler[IO])
         val httpApp = AutoSlash(api.routes)
+
+        println(s"PORT = ${config.port}")
 
         BlazeServerBuilder[IO](ExecutionContext.global)
           .bindHttp(config.port)
