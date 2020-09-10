@@ -24,7 +24,7 @@ object Main extends IOApp {
         val httpApp = AutoSlash(api.routes)
 
         BlazeServerBuilder[IO](ExecutionContext.global)
-          .bindHttp(config.port, config.host)
+          .bindHttp(config.port)
           .withHttpApp(httpApp.orNotFound)
           .serve
           .compile
