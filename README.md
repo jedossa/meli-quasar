@@ -49,18 +49,16 @@ You can check it out running `docker images`.
 
 ## Running
 
-HTTP is going to run at port `8080`
-
 ### From sbt
 
-You can run the code directly from sbt-shell typing `sbt` and then `http/run`.
+You can run the code directly from sbt-shell typing `sbt` and then `http/run -Dhttp.port=${PORT}`.
 
 ### From launcher
 
 After running `sbt stage`, you can run the program as fallows:
 
 ```
-./http/target/universal/stage/bin/quasar-http
+./http/target/universal/stage/bin/quasar-http -Dhttp.port=${PORT}
 ```
 
 ### From a docker container
@@ -68,7 +66,7 @@ After running `sbt stage`, you can run the program as fallows:
 If you already created `quasar-http:0.0.1` image using `sbt docker:publishLocal`, you can run it in the interactive mode:
 
 ```
-docker run -i quasar-http:0.0.1 -P
+docker run -i quasar-http:0.0.1 -p 8080:8080
 ```
 
 ## Running the tests
