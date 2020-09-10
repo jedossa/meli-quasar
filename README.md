@@ -51,14 +51,14 @@ You can check it out running `docker images`.
 
 ### From sbt
 
-You can run the code directly from sbt-shell typing `sbt` and then `http/run -Dhttp.port=${PORT}`.
+You can run the code directly from sbt-shell typing `sbt` and then `http/run`.
 
 ### From launcher
 
 After running `sbt stage`, you can run the program as fallows:
 
 ```
-./http/target/universal/stage/bin/quasar-http -Dhttp.port=${PORT}
+./http/target/universal/stage/bin/quasar-http
 ```
 
 ### From a docker container
